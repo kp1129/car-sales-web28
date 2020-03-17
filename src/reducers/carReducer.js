@@ -1,9 +1,4 @@
-// things i'm gonna need here
-
-// action types as strings
-// initial state
-// actual reducer function
-
+import {ADD_FEATURE, REMOVE_FEATURE} from '../actions/carActions';
 export const initialState = {
     additionalPrice: 0,
     car: {
@@ -23,6 +18,16 @@ export const initialState = {
 
 export const carReducer = (state = initialState, action) => {
     switch(action.type){
+        case ADD_FEATURE:
+            console.log(action.payload)
+            let filteredArr = state.additionalFeatures.filter(obj => obj.id !== action.payload.id)
+            return {
+                ...state,
+                car: {...state.car,
+                    features: [...state.car.features, action.payload]},
+                additionalFeatures: [...filteredArr],
+                additionalPrice: state.additionalPrice + (action.payload.price)    
+            }
         default:
             return state;
     }
